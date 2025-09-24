@@ -6,10 +6,31 @@
 typedef struct Node
 {
     int data;
-    node *next;
+    struct Node *next;
 } node;
 
 node *head;
+
+
+int findLength()
+{
+    if (head == NULL)
+    {
+        printf("Data not fount\n");
+        return 0;
+    }
+    int n = 0;
+    node *temp = head;
+    do
+    {
+        n++;
+        printf("%d  ", temp->data);
+        temp = temp->next;
+    } while (temp != head);
+    printf("\n");
+    return n;
+}
+
 
 void insertAtLast()
 {
@@ -32,12 +53,13 @@ void insertAtLast()
     }
 
     node *p = head;
-    while(p->next!=head){
-        p=p->next;
+    while (p->next != head)
+    {
+        p = p->next;
     }
 
-    p->next=temp;
-    temp->next=head;
+    p->next = temp;
+    temp->next = head;
 }
 
 void insertAtStart()
@@ -60,66 +82,110 @@ void insertAtStart()
     }
 
     node *p = head;
-    while(p->next!=head){
-        p=p->next;
+    while (p->next != head)
+    {
+        p = p->next;
     }
-    temp->next=head;
-    p->next=temp;
-    head=temp;
+    temp->next = head;
+    p->next = temp;
+    head = temp;
 }
 
-void insertAtPosition(int pos){
-    if(pos<=0){
+void insertAtPosition(int pos)
+{
+    int length = findLength();
+    if (pos <= 0)
+    {
         printf("Invalid Input!\n");
         return;
     }
-    if(pos==1){
+    if (pos == 1)
+    {
         insertAtStart();
         return;
     }
-    int length = findLength();
-    if(pos==length+1){
+
+    if (pos == length + 1)
+    {
         insertAtLast();
         return;
     }
-    if(pos>length+1){
+    if (pos > length + 1)
+    {
         printf("Out of Range\n");
         return;
     }
 
     node *temp = (node *)malloc(sizeof(node));
-    if(temp==NULL){
+    if (temp == NULL)
+    {
         printf("Memory Error : memory not allocated\n");
         return;
     }
 
     node *p = head;
 
-    for(int i=1;i<pos-1;i++){
-        p=p->next;
+    for (int i = 1; i < pos - 1; i++)
+    {
+        p = p->next;
     }
     printf("\nEnter a number: ");
-    scanf("%d",&temp->data);
-    temp->next=p->next;
-    p->next=temp;
+    scanf("%d", &temp->data);
+    temp->next = p->next;
+    p->next = temp;
 }
 
-int findLength(){
-    if(head==NULL){
-        printf("Data not fount\n");
-        return 0;
-    }
-    int n=0;
-    node *temp = head;
-    while(temp->next!=head){
-        n++;
-        printf("%d  ",temp->data);
-    }
-    printf('\n\n');
-    return n;
-}
+
 
 int main()
 {
+    while (1)
+    {
+        printf(
+            "\n       MENU         "
+            "\n--------------------"
+            "\n1. Insert at end"
+            "\n2. insert at start"
+            "\n3. get length and element"
+            "\n4. insert at any position"
+            "\n99. Exit\n");
+        int choice;
+        printf("\n Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+        {
+            insertAtLast();
+            break;
+        }
+        case 2:
+        {
+            insertAtStart();
+            break;
+        }
+        case 3:
+        {
+            printf("\nLength = %d\n", findLength());
+            break;
+        }
+        case 4:
+        {
+            int pos;
+            printf("\nEnter position: ");
+            scanf("%d", &pos);
+            insertAtPosition(pos);
+            break;
+        }
+        case 99:
+        {
+            printf("\nExiting...\n");
+            exit(0);
+        }
+        default:
+            printf("\nInvalid choice!\n");
+        }
+    }
     return 0;
 }
