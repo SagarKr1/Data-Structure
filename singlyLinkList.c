@@ -182,6 +182,11 @@ void deleteFromMiddle()
     }
     int length = findLength();
 
+    if(pos>length){
+        printf("Condition not satisfied\n");
+        return;
+    }
+    
     if(pos==1){
         deleteFromStart();
         return;
@@ -192,10 +197,6 @@ void deleteFromMiddle()
         return;
     }
 
-    if(pos>length){
-        printf("Condition not satisfied\n");
-        return;
-    }
     Node *ptr = head;
     for(int i=1;i<pos-1;i++){
         ptr=ptr->next;
