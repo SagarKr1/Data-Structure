@@ -9,7 +9,7 @@ typedef struct Node
     struct Node *next;
 } node;
 
-node *head;
+node *head = NULL;
 
 
 int findLength()
